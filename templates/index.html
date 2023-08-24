@@ -1,0 +1,140 @@
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+{% block styles %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+{% endblock %}
+
+{% block title %}Katie's To Do List{% endblock %}
+
+{% block content %}
+
+<h1>To Do List</h1>
+
+<div class="lists">
+
+  <div class="year">
+    <h2>This Year</h2>
+    {% if year_list|length == 0: %}
+    <p>There are no tasks on this list.</p>
+    {% endif %}
+    <ul class="list-group">
+      {% for task in year_list %}
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-6">
+            {{ task.task_name }}
+          </div>
+          <div class="col-sm-3">
+            {{ task.due_date.strftime("%m/%d/%Y") }}
+          </div>
+          <div class="col-sm-3">
+            <a href="{{ url_for('mark_complete', id=task.id) }}">✅</a>
+            <a href="{{ url_for('delete_task', id=task.id) }}">❌</a>
+            <a href="{{ url_for('move_down', id=task.id) }}">⬇️</a>
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="month">
+    <h2>This Month</h2>
+    {% if month_list|length == 0: %}
+    <p>There are no tasks on this list.</p>
+    {% endif %}
+    <ul class="list-group">
+      {% for task in month_list %}
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-6">
+            {{ task.task_name }}
+          </div>
+          <div class="col-sm-3">
+            {{ task.due_date.strftime("%m/%d/%Y") }}
+          </div>
+          <div class="col-sm-3">
+            <a href="{{ url_for('mark_complete', id=task.id) }}">✅</a>
+            <a href="{{ url_for('delete_task', id=task.id) }}">❌</a>
+            <a href="{{ url_for('move_up', id=task.id) }}">⬆️</a>
+            <a href="{{ url_for('move_down', id=task.id) }}">⬇️</a>
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+
+  <div class="week">
+    <h2>This Week</h2>
+    {% if week_list|length == 0: %}
+    <p>There are no tasks on this list.</p>
+    {% endif %}
+    <ul class="list-group">
+      {% for task in week_list %}
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-6">
+            {{ task.task_name }}
+          </div>
+          <div class="col-sm-3">
+            {{ task.due_date.strftime("%m/%d/%Y") }}
+          </div>
+          <div class="col-sm-3">
+            <a href="{{ url_for('mark_complete', id=task.id) }}">✅</a>
+            <a href="{{ url_for('delete_task', id=task.id) }}">❌</a>
+            <a href="{{ url_for('move_up', id=task.id) }}">⬆️</a>
+            <a href="{{ url_for('move_down', id=task.id) }}">⬇️</a>
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="day">
+    <h2>Today</h2>
+    {% if day_list|length == 0: %}
+    <p>There are no tasks on this list.</p>
+    {% endif %}
+    <ul class="list-group">
+      {% for task in day_list %}
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-6">
+            {{ task.task_name }}
+          </div>
+          <div class="col-sm-3">
+            {{ task.due_date.strftime("%m/%d/%Y") }}
+          </div>
+          <div class="col-sm-3">
+            <a href="{{ url_for('mark_complete', id=task.id) }}">✅</a>
+            <a href="{{ url_for('delete_task', id=task.id) }}">❌</a>
+            <a href="{{ url_for('move_up', id=task.id) }}">⬆️</a>
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+<div class="form">
+  <h2>Add Task</h2>
+  <div class="row">
+    <div class="col-sm-6">
+      {{ wtf.quick_form(form) }}
+    </div>
+  </div>
+</div>
+
+<div class="links">
+  <p><a href="{{ url_for('archive') }}">View Completed Tasks</a></p>
+  <p><a href="{{ url_for('show_recurring') }}">Edit/Delete Recurring Tasks</a></p>
+</div>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+body {
+    padding: 5%;
+}
+
+h1 {
+    color: blue;
+}
+
+h2 {
+    color: green;
+    padding: 2% 0 1% 0;
+}
+
+.form {
+    padding-bottom: 2%;
+}
